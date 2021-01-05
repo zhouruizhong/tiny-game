@@ -1,7 +1,5 @@
 package com.zrz.game;
 
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -20,8 +18,6 @@ import io.netty.handler.logging.LoggingHandler;
  * @author 周瑞忠
  */
 public class GameServer {
-
-  private static final Logger logger = LoggerFactory.getLogger(GameServer.class);
 
   public static void main(String[] args) throws Exception {
     EventLoopGroup bossGroup = new NioEventLoopGroup(1);
@@ -44,7 +40,7 @@ public class GameServer {
     try{
       ChannelFuture channelFuture = bootstrap.bind(12345).sync();
       if (channelFuture.isSuccess()) {
-        logger.debug("服务器启动成功。。。");
+        System.out.println("服务器启动成功。。。");
       }
       channelFuture.channel().closeFuture().sync();
     }finally{

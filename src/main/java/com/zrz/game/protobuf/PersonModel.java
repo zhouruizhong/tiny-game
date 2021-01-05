@@ -165,7 +165,7 @@ public final class PersonModel {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs =
+        com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         name_ = s;
@@ -180,7 +180,7 @@ public final class PersonModel {
         getNameBytes() {
       java.lang.Object ref = name_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
+        com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
         name_ = b;
@@ -201,7 +201,7 @@ public final class PersonModel {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs =
+        com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         age_ = s;
@@ -216,7 +216,7 @@ public final class PersonModel {
         getAgeBytes() {
       java.lang.Object ref = age_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b =
+        com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
         age_ = b;
@@ -230,12 +230,8 @@ public final class PersonModel {
     @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) {
-        return true;
-      }
-      if (isInitialized == 0) {
-        return false;
-      }
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       memoizedIsInitialized = 1;
       return true;
@@ -259,9 +255,7 @@ public final class PersonModel {
     @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
-      if (size != -1) {
-        return size;
-      }
+      if (size != -1) return size;
 
       size = 0;
       if (id_ != 0) {
@@ -290,20 +284,12 @@ public final class PersonModel {
       com.zrz.game.protobuf.PersonModel.Person other = (com.zrz.game.protobuf.PersonModel.Person) obj;
 
       if (getId()
-          != other.getId()) {
-        return false;
-      }
+          != other.getId()) return false;
       if (!getName()
-          .equals(other.getName())) {
-        return false;
-      }
+          .equals(other.getName())) return false;
       if (!getAge()
-          .equals(other.getAge())) {
-        return false;
-      }
-      if (!unknownFields.equals(other.unknownFields)) {
-        return false;
-      }
+          .equals(other.getAge())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
 
@@ -590,7 +576,7 @@ public final class PersonModel {
        * @return This builder for chaining.
        */
       public Builder setId(int value) {
-
+        
         id_ = value;
         onChanged();
         return this;
@@ -600,7 +586,7 @@ public final class PersonModel {
        * @return This builder for chaining.
        */
       public Builder clearId() {
-
+        
         id_ = 0;
         onChanged();
         return this;
@@ -631,7 +617,7 @@ public final class PersonModel {
           getNameBytes() {
         java.lang.Object ref = name_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
+          com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
           name_ = b;
@@ -650,7 +636,7 @@ public final class PersonModel {
         if (value == null) {
     throw new NullPointerException();
   }
-
+  
         name_ = value;
         onChanged();
         return this;
@@ -660,7 +646,7 @@ public final class PersonModel {
        * @return This builder for chaining.
        */
       public Builder clearName() {
-
+        
         name_ = getDefaultInstance().getName();
         onChanged();
         return this;
@@ -676,7 +662,7 @@ public final class PersonModel {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
-
+        
         name_ = value;
         onChanged();
         return this;
@@ -707,7 +693,7 @@ public final class PersonModel {
           getAgeBytes() {
         java.lang.Object ref = age_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
+          com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
           age_ = b;
@@ -726,7 +712,7 @@ public final class PersonModel {
         if (value == null) {
     throw new NullPointerException();
   }
-
+  
         age_ = value;
         onChanged();
         return this;
@@ -736,7 +722,7 @@ public final class PersonModel {
        * @return This builder for chaining.
        */
       public Builder clearAge() {
-
+        
         age_ = getDefaultInstance().getAge();
         onChanged();
         return this;
@@ -752,7 +738,7 @@ public final class PersonModel {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
-
+        
         age_ = value;
         onChanged();
         return this;
@@ -812,7 +798,7 @@ public final class PersonModel {
 
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_com_zrz_game_Person_descriptor;
-  private static final
+  private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_com_zrz_game_Person_fieldAccessorTable;
 
