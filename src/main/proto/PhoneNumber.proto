@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package com.zrz.game;
+
+option java_package = "com.zrz.game.protobuf";
+option java_outer_classname = "PhoneNumberModel";
+
+message PhoneNumber {
+  int32 personId = 1;
+  string phoneNumber = 2;
+}
