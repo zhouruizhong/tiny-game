@@ -1,6 +1,6 @@
 package com.zrz.game;
 
-import com.zrz.game.protobuf.PersonModel;
+import com.zrz.game.handler.GameClientHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -29,7 +29,7 @@ public class GameClient {
                           System.out.println("initChannel");
                           ChannelPipeline channelPipeline = socketChannel.pipeline();
                           channelPipeline.addLast(new ProtobufVarint32FrameDecoder())
-                                  .addLast(new ProtobufDecoder(PersonModel.Person.getDefaultInstance()))
+                                  //.addLast(new ProtobufDecoder(PersonModel.Person.getDefaultInstance()))
                                   .addLast(new ProtobufVarint32LengthFieldPrepender())
                                   .addLast(new ProtobufEncoder())
                                   .addLast(new GameClientHandler());

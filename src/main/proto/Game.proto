@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package msg;
+
+option java_package = "com.zrz.game.protobuf";
+option java_outer_classname = "GameProtocol";
+
+// 消息代号
+enum MsgCode{
+  USER_ENTRY_CMD = 0;
+  USER_ENTRY_RESULT = 1;
+}
+
+/**
+ * 用户入场
+ * 指令
+ */
+message UserEntryCmd{
+  uint32 userId = 1;
+  string heroAvatar = 2;
+}
+
+/**
+ * 用户入场
+ * 结果
+ */
+message UserEntryResult{
+  uint32 userId = 1;
+  string heroAvatar = 2;
+}
+
+

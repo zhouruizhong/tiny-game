@@ -1,6 +1,9 @@
 package com.zrz.game;
 
-import com.zrz.game.protobuf.PersonModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import com.zrz.game.decoder.GameDecoder;
+import com.zrz.game.handler.GameServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -21,12 +24,14 @@ import io.netty.handler.logging.LoggingHandler;
  */
 public class GameServer {
 
+  private static final Logger logger = LoggerFactory.getLogger(GameServer.class);
+
   public static void main(String[] args) throws Exception {
     EventLoopGroup bossGroup = new NioEventLoopGroup(1);
     EventLoopGroup workGroup = new NioEventLoopGroup();
+
     ServerBootstrap bootstrap = new ServerBootstrap();
-    bootstrap
-        .group(bossGroup, workGroup)
+    bootstrap.group(bossGroup, workGroup)
         .channel(NioServerSocketChannel.class)
         .handler(new LoggingHandler(LogLevel.INFO))
         .childOption(ChannelOption.TCP_NODELAY, true)
@@ -36,21 +41,23 @@ public class GameServer {
               @Override
               protected void initChannel(SocketChannel socketChannel) throws Exception {
                 ChannelPipeline channelPipeline = socketChannel.pipeline();
-                /*channelPipeline.addLast(new HttpServerCodec());
+                channelPipeline.addLast(new HttpServerCodec());
                 channelPipeline.addLast(new HttpObjectAggregator(65535));
                 channelPipeline.addLast(new WebSocketServerProtocolHandler("/websocket"));
-                channelPipeline.addLast(new GameServerHandler());*/
-                channelPipeline.addLast(new ProtobufVarint32FrameDecoder())
+                // 自定义的解码器
+                channelPipeline.addLast(new GameDecoder());
+                channelPipeline.addLast(new GameServerHandler());
+                /*channelPipeline.addLast(new ProtobufVarint32FrameDecoder())
                         .addLast(new ProtobufDecoder(PersonModel.Person.getDefaultInstance()))
                         .addLast(new ProtobufVarint32LengthFieldPrepender())
                         .addLast(new ProtobufEncoder())
-                        .addLast(new GameServerHandler());
+                        .addLast(new GameServerHandler());*/
               }
             });
     try{
-      ChannelFuture channelFuture = bootstrap.bind(18080).sync();
+      ChannelFuture channelFuture = bootstrap.bind(12345).sync();
       if (channelFuture.isSuccess()) {
-        System.out.println("服务器启动成功。。。");
+        logger.info("服务器启动成功。。。");
       }
       channelFuture.channel().closeFuture().sync();
     }finally{

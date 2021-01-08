@@ -1,7 +1,6 @@
-package com.zrz.game;
+package com.zrz.game.handler;
 
 import com.google.protobuf.MessageLite;
-import com.zrz.game.protobuf.PersonModel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
@@ -18,8 +17,7 @@ public class GameClientHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        PersonModel.Person person = (PersonModel.Person)msg;
-        System.out.println(person.getName());
+
     }
 
     @Override
@@ -29,10 +27,6 @@ public class GameClientHandler extends ChannelInboundHandlerAdapter {
     }
 
     public MessageLite build(){
-        PersonModel.Person.Builder builder = PersonModel.Person.newBuilder();
-        builder.setAge("35");
-        builder.setName("天启");
-        builder.setId(5);
-        return builder.build();
+        return null;
     }
 }

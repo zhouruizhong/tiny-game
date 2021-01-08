@@ -1,6 +1,4 @@
 
-import com.google.protobuf.InvalidProtocolBufferException;
-import com.zrz.game.protobuf.PersonModel;
 import org.junit.Test;
 
 import java.io.*;
@@ -10,7 +8,7 @@ import java.io.*;
  */
 public class ProtobufTest {
 
-    PersonModel.Person.Builder builder = PersonModel.Person.newBuilder();
+    /*PersonModel.Person.Builder builder = PersonModel.Person.newBuilder();
     PersonModel.Person person = builder.build();
 
     @Test
@@ -47,6 +45,6 @@ public class ProtobufTest {
         FileInputStream fileInputStream = new FileInputStream(new File("/test.dt"));
         PersonModel.Person result = PersonModel.Person.parseFrom(fileInputStream);
         System.out.println(result);
-    }
+    }*/
 
 }
