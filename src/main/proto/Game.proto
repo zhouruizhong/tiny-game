@@ -87,11 +87,11 @@ message UserAttackResult{
 }
 
 message UserDieResult{
-
+  uint32 dieUserId = 1;
 }
 
 message UserQuitResult{
-
+  uint32 quitUserId = 1;
 }
 
 message UserSubtractHpResult{

@@ -6308,6 +6308,12 @@ public final class GameProtocol {
   public interface UserDieResultOrBuilder extends
       // @@protoc_insertion_point(interface_extends:msg.UserDieResult)
       com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>uint32 dieUserId = 1;</code>
+     * @return The dieUserId.
+     */
+    int getDieUserId();
   }
   /**
    * Protobuf type {@code msg.UserDieResult}
@@ -6354,6 +6360,11 @@ public final class GameProtocol {
             case 0:
               done = true;
               break;
+            case 8: {
+
+              dieUserId_ = input.readUInt32();
+              break;
+            }
             default: {
               if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
@@ -6386,6 +6397,16 @@ public final class GameProtocol {
               com.zrz.game.protobuf.GameProtocol.UserDieResult.class, com.zrz.game.protobuf.GameProtocol.UserDieResult.Builder.class);
     }
 
+    public static final int DIEUSERID_FIELD_NUMBER = 1;
+    private int dieUserId_;
+    /**
+     * <code>uint32 dieUserId = 1;</code>
+     * @return The dieUserId.
+     */
+    public int getDieUserId() {
+      return dieUserId_;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -6400,6 +6421,9 @@ public final class GameProtocol {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      if (dieUserId_ != 0) {
+        output.writeUInt32(1, dieUserId_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -6409,6 +6433,10 @@ public final class GameProtocol {
       if (size != -1) return size;
 
       size = 0;
+      if (dieUserId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(1, dieUserId_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -6424,6 +6452,8 @@ public final class GameProtocol {
       }
       com.zrz.game.protobuf.GameProtocol.UserDieResult other = (com.zrz.game.protobuf.GameProtocol.UserDieResult) obj;
 
+      if (getDieUserId()
+          != other.getDieUserId()) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -6435,6 +6465,8 @@ public final class GameProtocol {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + DIEUSERID_FIELD_NUMBER;
+      hash = (53 * hash) + getDieUserId();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -6568,6 +6600,8 @@ public final class GameProtocol {
       @java.lang.Override
       public Builder clear() {
         super.clear();
+        dieUserId_ = 0;
+
         return this;
       }
 
@@ -6594,6 +6628,7 @@ public final class GameProtocol {
       @java.lang.Override
       public com.zrz.game.protobuf.GameProtocol.UserDieResult buildPartial() {
         com.zrz.game.protobuf.GameProtocol.UserDieResult result = new com.zrz.game.protobuf.GameProtocol.UserDieResult(this);
+        result.dieUserId_ = dieUserId_;
         onBuilt();
         return result;
       }
@@ -6642,6 +6677,9 @@ public final class GameProtocol {
 
       public Builder mergeFrom(com.zrz.game.protobuf.GameProtocol.UserDieResult other) {
         if (other == com.zrz.game.protobuf.GameProtocol.UserDieResult.getDefaultInstance()) return this;
+        if (other.getDieUserId() != 0) {
+          setDieUserId(other.getDieUserId());
+        }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
@@ -6668,6 +6706,36 @@ public final class GameProtocol {
             mergeFrom(parsedMessage);
           }
         }
+        return this;
+      }
+
+      private int dieUserId_ ;
+      /**
+       * <code>uint32 dieUserId = 1;</code>
+       * @return The dieUserId.
+       */
+      public int getDieUserId() {
+        return dieUserId_;
+      }
+      /**
+       * <code>uint32 dieUserId = 1;</code>
+       * @param value The dieUserId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setDieUserId(int value) {
+        
+        dieUserId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 dieUserId = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearDieUserId() {
+        
+        dieUserId_ = 0;
+        onChanged();
         return this;
       }
       @java.lang.Override
@@ -6726,6 +6794,12 @@ public final class GameProtocol {
   public interface UserQuitResultOrBuilder extends
       // @@protoc_insertion_point(interface_extends:msg.UserQuitResult)
       com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>uint32 quitUserId = 1;</code>
+     * @return The quitUserId.
+     */
+    int getQuitUserId();
   }
   /**
    * Protobuf type {@code msg.UserQuitResult}
@@ -6772,6 +6846,11 @@ public final class GameProtocol {
             case 0:
               done = true;
               break;
+            case 8: {
+
+              quitUserId_ = input.readUInt32();
+              break;
+            }
             default: {
               if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
@@ -6804,6 +6883,16 @@ public final class GameProtocol {
               com.zrz.game.protobuf.GameProtocol.UserQuitResult.class, com.zrz.game.protobuf.GameProtocol.UserQuitResult.Builder.class);
     }
 
+    public static final int QUITUSERID_FIELD_NUMBER = 1;
+    private int quitUserId_;
+    /**
+     * <code>uint32 quitUserId = 1;</code>
+     * @return The quitUserId.
+     */
+    public int getQuitUserId() {
+      return quitUserId_;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -6818,6 +6907,9 @@ public final class GameProtocol {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      if (quitUserId_ != 0) {
+        output.writeUInt32(1, quitUserId_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -6827,6 +6919,10 @@ public final class GameProtocol {
       if (size != -1) return size;
 
       size = 0;
+      if (quitUserId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(1, quitUserId_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -6842,6 +6938,8 @@ public final class GameProtocol {
       }
       com.zrz.game.protobuf.GameProtocol.UserQuitResult other = (com.zrz.game.protobuf.GameProtocol.UserQuitResult) obj;
 
+      if (getQuitUserId()
+          != other.getQuitUserId()) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -6853,6 +6951,8 @@ public final class GameProtocol {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + QUITUSERID_FIELD_NUMBER;
+      hash = (53 * hash) + getQuitUserId();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -6986,6 +7086,8 @@ public final class GameProtocol {
       @java.lang.Override
       public Builder clear() {
         super.clear();
+        quitUserId_ = 0;
+
         return this;
       }
 
@@ -7012,6 +7114,7 @@ public final class GameProtocol {
       @java.lang.Override
       public com.zrz.game.protobuf.GameProtocol.UserQuitResult buildPartial() {
         com.zrz.game.protobuf.GameProtocol.UserQuitResult result = new com.zrz.game.protobuf.GameProtocol.UserQuitResult(this);
+        result.quitUserId_ = quitUserId_;
         onBuilt();
         return result;
       }
@@ -7060,6 +7163,9 @@ public final class GameProtocol {
 
       public Builder mergeFrom(com.zrz.game.protobuf.GameProtocol.UserQuitResult other) {
         if (other == com.zrz.game.protobuf.GameProtocol.UserQuitResult.getDefaultInstance()) return this;
+        if (other.getQuitUserId() != 0) {
+          setQuitUserId(other.getQuitUserId());
+        }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
@@ -7086,6 +7192,36 @@ public final class GameProtocol {
             mergeFrom(parsedMessage);
           }
         }
+        return this;
+      }
+
+      private int quitUserId_ ;
+      /**
+       * <code>uint32 quitUserId = 1;</code>
+       * @return The quitUserId.
+       */
+      public int getQuitUserId() {
+        return quitUserId_;
+      }
+      /**
+       * <code>uint32 quitUserId = 1;</code>
+       * @param value The quitUserId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setQuitUserId(int value) {
+        
+        quitUserId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 quitUserId = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearQuitUserId() {
+        
+        quitUserId_ = 0;
+        onChanged();
         return this;
       }
       @java.lang.Override
@@ -7649,18 +7785,19 @@ public final class GameProtocol {
       "\002 \001(\002\"N\n\020UserMoveToResult\022\022\n\nmoveUserId\030" +
       "\001 \001(\r\022\022\n\nmoveToPosX\030\002 \001(\002\022\022\n\nmoveToPosY\030" +
       "\003 \001(\002\"\r\n\013UserStopCmd\"\020\n\016UserStopResult\"\017" +
-      "\n\rUserAttackCmd\"\022\n\020UserAttackResult\"\017\n\rU" +
-      "serDieResult\"\020\n\016UserQuitResult\"\026\n\024UserSu" +
-      "btractHpResult*\270\002\n\007MsgCode\022\022\n\016USER_ENTRY" +
-      "_CMD\020\000\022\025\n\021USER_ENTRY_RESULT\020\001\022\030\n\024WHO_ELS" +
-      "E_IS_HERE_CMD\020\002\022\033\n\027WHO_ELSE_IS_HERE_RESU" +
-      "LT\020\003\022\024\n\020USER_MOVE_TO_CMD\020\004\022\027\n\023USER_MOVE_" +
-      "TO_RESULT\020\005\022\024\n\020USER_QUIT_RESULT\020\006\022\021\n\rUSE" +
-      "R_STOP_CMD\020\007\022\024\n\020USER_STOP_RESULT\020\010\022\023\n\017US" +
-      "ER_ATTACK_CMD\020\t\022\026\n\022USER_ATTACK_RESULT\020\n\022" +
-      "\033\n\027USER_SUBTRACT_HP_RESULT\020\013\022\023\n\017USER_DIE" +
-      "_RESULT\020\014B%\n\025com.zrz.game.protobufB\014Game" +
-      "Protocolb\006proto3"
+      "\n\rUserAttackCmd\"\022\n\020UserAttackResult\"\"\n\rU" +
+      "serDieResult\022\021\n\tdieUserId\030\001 \001(\r\"$\n\016UserQ" +
+      "uitResult\022\022\n\nquitUserId\030\001 \001(\r\"\026\n\024UserSub" +
+      "tractHpResult*\270\002\n\007MsgCode\022\022\n\016USER_ENTRY_" +
+      "CMD\020\000\022\025\n\021USER_ENTRY_RESULT\020\001\022\030\n\024WHO_ELSE" +
+      "_IS_HERE_CMD\020\002\022\033\n\027WHO_ELSE_IS_HERE_RESUL" +
+      "T\020\003\022\024\n\020USER_MOVE_TO_CMD\020\004\022\027\n\023USER_MOVE_T" +
+      "O_RESULT\020\005\022\024\n\020USER_QUIT_RESULT\020\006\022\021\n\rUSER" +
+      "_STOP_CMD\020\007\022\024\n\020USER_STOP_RESULT\020\010\022\023\n\017USE" +
+      "R_ATTACK_CMD\020\t\022\026\n\022USER_ATTACK_RESULT\020\n\022\033" +
+      "\n\027USER_SUBTRACT_HP_RESULT\020\013\022\023\n\017USER_DIE_" +
+      "RESULT\020\014B%\n\025com.zrz.game.protobufB\014GameP" +
+      "rotocolb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -7737,13 +7874,13 @@ public final class GameProtocol {
     internal_static_msg_UserDieResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserDieResult_descriptor,
-        new java.lang.String[] { });
+        new java.lang.String[] { "DieUserId", });
     internal_static_msg_UserQuitResult_descriptor =
       getDescriptor().getMessageTypes().get(11);
     internal_static_msg_UserQuitResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserQuitResult_descriptor,
-        new java.lang.String[] { });
+        new java.lang.String[] { "QuitUserId", });
     internal_static_msg_UserSubtractHpResult_descriptor =
       getDescriptor().getMessageTypes().get(12);
     internal_static_msg_UserSubtractHpResult_fieldAccessorTable = new
