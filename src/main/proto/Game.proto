@@ -9,6 +9,17 @@ option java_outer_classname = "GameProtocol";
 enum MsgCode{
   USER_ENTRY_CMD = 0;
   USER_ENTRY_RESULT = 1;
+  WHO_ELSE_IS_HERE_CMD = 2;
+  WHO_ELSE_IS_HERE_RESULT = 3;
+  USER_MOVE_TO_CMD = 4;
+  USER_MOVE_TO_RESULT = 5;
+  USER_QUIT_RESULT = 6;
+  USER_STOP_CMD = 7;
+  USER_STOP_RESULT = 8;
+  USER_ATTACK_CMD = 9;
+  USER_ATTACK_RESULT = 10;
+  USER_SUBTRACT_HP_RESULT = 11;
+  USER_DIE_RESULT = 12;
 }
 
 /**
@@ -29,4 +40,60 @@ message UserEntryResult{
   string heroAvatar = 2;
 }
 
+message WhoElseIsHereCmd {
 
+}
+
+message WhoElseIsHereResult{
+
+  repeated UserInfo userInfo = 1;
+
+  message UserInfo {
+    uint32 userId = 1;
+    string heroAvatar = 2;
+  }
+}
+// 用户移动指令
+message UserMoveToCmd {
+  // 移动位置X
+  float moveToPosX = 1;
+  // 移动位置Y
+  float moveToPosY = 2;
+}
+
+// 用户移动结果
+message UserMoveToResult {
+  uint32 moveUserId = 1;
+  // 移动位置X
+  float moveToPosX = 2;
+  // 移动位置Y
+  float moveToPosY = 3;
+}
+
+message UserStopCmd{
+
+}
+
+message UserStopResult{
+
+}
+
+message UserAttackCmd{
+
+}
+
+message UserAttackResult{
+
+}
+
+message UserDieResult{
+
+}
+
+message UserQuitResult{
+
+}
+
+message UserSubtractHpResult{
+
+}

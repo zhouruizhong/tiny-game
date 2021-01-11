@@ -7,6 +7,10 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
 
+/**
+ * 消息解码
+ * @author 周瑞忠
+ */
 public class GameDecoder extends ChannelInboundHandlerAdapter {
 
     @Override
@@ -31,6 +35,12 @@ public class GameDecoder extends ChannelInboundHandlerAdapter {
         switch (msgCode) {
             case GameProtocol.MsgCode.USER_ENTRY_CMD_VALUE:
                 cmd = GameProtocol.UserEntryCmd.parseFrom(msgBody);
+                break;
+            case GameProtocol.MsgCode.WHO_ELSE_IS_HERE_CMD_VALUE:
+                cmd = GameProtocol.WhoElseIsHereCmd.parseFrom(msgBody);
+                break;
+            case GameProtocol.MsgCode.USER_MOVE_TO_CMD_VALUE:
+                cmd = GameProtocol.UserMoveToCmd.parseFrom(msgBody);
                 break;
             default:
         }

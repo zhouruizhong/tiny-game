@@ -1,5 +1,6 @@
 package com.zrz.game;
 
+import com.zrz.game.encoder.GameEncoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.zrz.game.decoder.GameDecoder;
@@ -46,6 +47,7 @@ public class GameServer {
                 channelPipeline.addLast(new WebSocketServerProtocolHandler("/websocket"));
                 // 自定义的解码器
                 channelPipeline.addLast(new GameDecoder());
+                channelPipeline.addLast(new GameEncoder());
                 channelPipeline.addLast(new GameServerHandler());
                 /*channelPipeline.addLast(new ProtobufVarint32FrameDecoder())
                         .addLast(new ProtobufDecoder(PersonModel.Person.getDefaultInstance()))
