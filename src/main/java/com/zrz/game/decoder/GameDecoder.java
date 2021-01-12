@@ -1,7 +1,7 @@
 package com.zrz.game.decoder;
 
-import com.google.protobuf.GeneratedMessageV3;
-import com.zrz.game.protobuf.GameProtocol;
+import com.google.protobuf.Message;
+import com.zrz.game.MessageRecognizer;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -27,27 +27,19 @@ public class GameDecoder extends ChannelInboundHandlerAdapter {
         // 读取消息的编号
         int msgCode = byteBuf.readShort();
 
+        Message.Builder msgBuilder = MessageRecognizer.getBuilderByMsgCode(msgCode);
+
         // 拿到真实的字节数组 并打印
         byte [] msgBody = new byte[byteBuf.readableBytes()];
         byteBuf.readBytes(msgBody);
 
-        GeneratedMessageV3 cmd = null;
-        switch (msgCode) {
-            case GameProtocol.MsgCode.USER_ENTRY_CMD_VALUE:
-                cmd = GameProtocol.UserEntryCmd.parseFrom(msgBody);
-                break;
-            case GameProtocol.MsgCode.WHO_ELSE_IS_HERE_CMD_VALUE:
-                cmd = GameProtocol.WhoElseIsHereCmd.parseFrom(msgBody);
-                break;
-            case GameProtocol.MsgCode.USER_MOVE_TO_CMD_VALUE:
-                cmd = GameProtocol.UserMoveToCmd.parseFrom(msgBody);
-                break;
-            default:
-        }
+        assert msgBuilder != null;
+        msgBuilder.clear();
 
-        if (null != cmd) {
-            ctx.fireChannelRead(cmd);
-        }
+        msgBuilder.mergeFrom(msgBody);
+
+        Message newMsg = msgBuilder.build();
+        ctx.fireChannelRead(newMsg);
     }
 }
 

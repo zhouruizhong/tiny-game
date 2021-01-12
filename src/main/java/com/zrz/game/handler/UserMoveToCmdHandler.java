@@ -18,11 +18,10 @@ public class UserMoveToCmdHandler implements ICmdHandler<GameProtocol.UserMoveTo
         if (null == userId) {
             return;
         }
-        GameProtocol.UserMoveToCmd cmd = msg;
         GameProtocol.UserMoveToResult.Builder builder = GameProtocol.UserMoveToResult.newBuilder();
         builder.setMoveUserId(userId);
-        builder.setMoveToPosX(cmd.getMoveToPosX());
-        builder.setMoveToPosY(cmd.getMoveToPosY());
+        builder.setMoveToPosX(msg.getMoveToPosX());
+        builder.setMoveToPosY(msg.getMoveToPosY());
 
         GameProtocol.UserMoveToResult result = builder.build();
         Broadcaster.broadcast(result);

@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 用户管理类
+ *
  * @author 周瑞忠
  */
 public final class UserManager {
@@ -20,7 +21,7 @@ public final class UserManager {
     }
 
     /**
-     * 添加用户和
+     * 添加用户
      * @param newUser 用户
      */
     public static void addUser(User newUser){

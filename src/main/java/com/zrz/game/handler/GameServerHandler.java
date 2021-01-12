@@ -1,6 +1,8 @@
 package com.zrz.game.handler;
 
+import com.google.protobuf.GeneratedMessageV3;
 import com.zrz.game.Broadcaster;
+import com.zrz.game.factory.CmdHandlerFactory;
 import com.zrz.game.model.User;
 import com.zrz.game.model.UserManager;
 import com.zrz.game.protobuf.GameProtocol;
@@ -43,16 +45,20 @@ public class GameServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         logger.info("收到客户端消息， msgClazz =" + msg.getClass().getName() + ", msg = " + msg);
-        if (msg instanceof GameProtocol.UserEntryCmd) {
-            new UserEntryCmdHandler().handler(ctx, (GameProtocol.UserEntryCmd) msg);
-        } else if (msg instanceof GameProtocol.WhoElseIsHereCmd) {
-            new WhoElseIsHereCmdHandler().handler(ctx, (GameProtocol.WhoElseIsHereCmd) msg);
-        } else if (msg instanceof GameProtocol.UserMoveToCmd) {
-            new UserMoveToCmdHandler().handler(ctx, (GameProtocol.UserMoveToCmd) msg);
+
+        ICmdHandler<? extends GeneratedMessageV3> cmdHandler = CmdHandlerFactory.create(msg);
+        if (null != cmdHandler) {
+            cmdHandler.handler(ctx, cast(msg));
         }
     }
 
-
+    private static <TCmd extends GeneratedMessageV3> TCmd cast(Object msg){
+        if (null == msg) {
+            return null;
+        } else {
+            return (TCmd) msg;
+        }
+    }
 
 
 }

@@ -9,8 +9,9 @@ import io.netty.channel.ChannelHandlerContext;
  *
  * @author 周瑞忠
  */
-public class WhoElseIsHereCmdHandler {
+public class WhoElseIsHereCmdHandler implements ICmdHandler<GameProtocol.WhoElseIsHereCmd> {
 
+    @Override
     public void handler(ChannelHandlerContext ctx, GameProtocol.WhoElseIsHereCmd msg) {
         GameProtocol.WhoElseIsHereResult.Builder builder = GameProtocol.WhoElseIsHereResult.newBuilder();
         for (User currUser: UserManager.listUser()) {

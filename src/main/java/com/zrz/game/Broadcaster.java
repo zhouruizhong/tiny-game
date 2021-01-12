@@ -23,6 +23,7 @@ public final class Broadcaster {
 
     /**
      * 添加信道
+     *
      * @param channel 信道
      */
     public static void addChannel(Channel channel){
@@ -31,6 +32,7 @@ public final class Broadcaster {
 
     /**
      * 移除信道
+     *
      * @param channel 信道
      */
     public static void removeChannel(Channel channel){
@@ -39,6 +41,7 @@ public final class Broadcaster {
 
     /**
      * 广播消息
+     *
      * @param msg 消息内容
      */
     public static void broadcast(Object msg){

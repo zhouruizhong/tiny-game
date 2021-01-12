@@ -1,7 +1,7 @@
 package com.zrz.game.encoder;
 
 import com.google.protobuf.GeneratedMessageV3;
-import com.zrz.game.protobuf.GameProtocol;
+import com.zrz.game.MessageRecognizer;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelOutboundHandlerAdapter;
@@ -20,22 +20,14 @@ public class GameEncoder extends ChannelOutboundHandlerAdapter {
 
     @Override
     public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
-        if (null == msg || !(msg instanceof GeneratedMessageV3)) {
+        if (!(msg instanceof GeneratedMessageV3)) {
             super.write(ctx, msg, promise);
             return;
         }
 
-        int msgCode = -1;
-        if (msg instanceof GameProtocol.UserEntryResult) {
-            msgCode = GameProtocol.MsgCode.USER_ENTRY_RESULT_VALUE;
-        } else if (msg instanceof GameProtocol.WhoElseIsHereResult){
-            msgCode = GameProtocol.MsgCode.WHO_ELSE_IS_HERE_RESULT_VALUE;
-        } else if (msg instanceof GameProtocol.UserMoveToResult) {
-            msgCode = GameProtocol.MsgCode.USER_MOVE_TO_RESULT_VALUE;
-        } else if (msg instanceof GameProtocol.UserQuitResult) {
-            msgCode = GameProtocol.MsgCode.USER_QUIT_RESULT_VALUE;
-        } else {
-            logger.info("无法识别消息类型， msgClazz = " + msg.getClass().getName());
+        int msgCode = MessageRecognizer.getMsgCodeByMsgClazz(msg);
+        if (msgCode <= -1) {
+            logger.error("无法识别的消息，msgClazz = {}", msg.getClass().getName());
             return;
         }
 
