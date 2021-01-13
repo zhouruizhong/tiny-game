@@ -78,22 +78,31 @@ message UserStopResult{
 
 }
 
+//用户攻击
 message UserAttackCmd{
-
+  //目标用户
+  uint32 userId = 1;
 }
 
 message UserAttackResult{
-
+  // 发动攻击的用户id
+  uint32 attackUserId = 1;
+  // 目标用户
+  uint32 targetUserId = 2;
 }
 
 message UserDieResult{
-  uint32 dieUserId = 1;
+  uint32 targetUserId = 1;
 }
 
 message UserQuitResult{
   uint32 quitUserId = 1;
 }
 
+// 用户掉血结果
 message UserSubtractHpResult{
-
+  // 目标用户
+  uint32 targetUserId = 1;
+  // 掉血量
+  uint32 subtractHp = 2;
 }

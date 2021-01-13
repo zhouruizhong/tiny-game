@@ -1,14 +1,17 @@
 package com.zrz.game.factory;
 
 import com.google.protobuf.GeneratedMessageV3;
-import com.zrz.game.handler.ICmdHandler;
-import com.zrz.game.handler.UserEntryCmdHandler;
-import com.zrz.game.handler.UserMoveToCmdHandler;
-import com.zrz.game.handler.WhoElseIsHereCmdHandler;
+import com.zrz.game.handler.*;
 import com.zrz.game.protobuf.GameProtocol;
+import org.reflections.Reflections;
+import org.reflections.util.ConfigurationBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 指令处理工厂类
@@ -16,6 +19,8 @@ import java.util.Map;
  * @author 周瑞忠
  */
 public final class CmdHandlerFactory {
+
+    private static final Logger logger = LoggerFactory.getLogger(CmdHandlerFactory.class);
 
     private static final Map<Class<?>, ICmdHandler<? extends GeneratedMessageV3>> handlerMap = new HashMap<>(16);
 
@@ -27,6 +32,40 @@ public final class CmdHandlerFactory {
         handlerMap.put(GameProtocol.UserEntryCmd.class, new UserEntryCmdHandler());
         handlerMap.put(GameProtocol.WhoElseIsHereCmd.class, new WhoElseIsHereCmdHandler());
         handlerMap.put(GameProtocol.UserMoveToCmd.class, new UserMoveToCmdHandler());
+    }
+
+    /**
+     * 利用Reflections反射实现动态添加处理器类
+     */
+    public static void start(){
+        Reflections reflections = new Reflections(new ConfigurationBuilder().forPackages("com.zrz.game.handler"));
+        Set<Class<? extends ICmdHandler>> classSet = reflections.getSubTypesOf(ICmdHandler.class);
+        for (Class<?> clazz : classSet) {
+            System.out.println(clazz.getName());
+            Method[] methods = clazz.getDeclaredMethods();
+            Class<?> msgType = null;
+            for (Method method : methods) {
+                String methodName = method.getName();
+                if (!methodName.equals("handler")) {
+                    continue;
+                }
+
+                Class<?> [] parameterTypes = method.getParameterTypes();
+                if (parameterTypes.length >= 2 && GeneratedMessageV3.class.isAssignableFrom(parameterTypes[1])) {
+                    msgType = parameterTypes[1];
+                    break;
+                }
+            }
+            if (null == msgType) {
+                continue;
+            }
+            try{
+                ICmdHandler<?> newHandler = (ICmdHandler<?>)clazz.newInstance();
+                handlerMap.put(msgType, newHandler);
+            }catch (Exception e) {
+                logger.error(e.getMessage(), e);
+            }
+        }
     }
 
     /**

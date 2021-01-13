@@ -30,7 +30,8 @@ public class GameServer {
 
   public static void main(String[] args) throws Exception {
     // 如果使用map存储处理器类，则需要初始化处理器map
-    CmdHandlerFactory.init();
+    CmdHandlerFactory.start();
+    MessageRecognizer.start();
 
     EventLoopGroup bossGroup = new NioEventLoopGroup(1);
     EventLoopGroup workGroup = new NioEventLoopGroup();
