@@ -41,12 +41,11 @@ public final class CmdHandlerFactory {
         Reflections reflections = new Reflections(new ConfigurationBuilder().forPackages("com.zrz.game.handler"));
         Set<Class<? extends ICmdHandler>> classSet = reflections.getSubTypesOf(ICmdHandler.class);
         for (Class<?> clazz : classSet) {
-            System.out.println(clazz.getName());
             Method[] methods = clazz.getDeclaredMethods();
             Class<?> msgType = null;
             for (Method method : methods) {
                 String methodName = method.getName();
-                if (!methodName.equals("handler")) {
+                if (!"handler".equals(methodName)) {
                     continue;
                 }
 

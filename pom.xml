@@ -17,6 +17,8 @@
         <grpc.version>1.6.1</grpc.version>
         <junit.version>4.12</junit.version>
         <reflections.version>0.9.10</reflections.version>
+        <mysql.version>5.1.35</mysql.version>
+        <ehcahe.version>2.8.3</ehcahe.version>
     </properties>
 
     <dependencies>
@@ -88,6 +90,21 @@
             <artifactId>reflections</artifactId>
             <version>${reflections.version}</version>
         </dependency>
+
+        <!--mysql驱动包-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
+        </dependency>
+
+        <!--  ehcache缓存包-->
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+            <version>${ehcahe.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>

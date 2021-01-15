@@ -1,0 +1,51 @@
+import com.zrz.game.GameServer;
+import javassist.ClassPool;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.sql.*;
+
+public class MysqlTest {
+
+  private static final Logger logger = LoggerFactory.getLogger(GameServer.class);
+
+  public static void main(String[] args) throws ClassNotFoundException, SQLException {
+    // 加载驱动
+    Class.forName("com.mysql.jdbc.Driver");
+    // 数据库连接
+    String url = "jdbc:mysql://localhost:3306/zrz?user=root&password=123456";
+    // 创建连接
+    Connection conn = DriverManager.getConnection(url);
+    //
+    String sql = "select * from clsbqy";
+
+    PreparedStatement ps = conn.prepareStatement(sql);
+    ResultSet rs = ps.executeQuery();
+
+    long start = System.currentTimeMillis();
+    while (rs.next()) {
+      Clsbqy clsbqy = new Clsbqy();
+      clsbqy.setDate(rs.getString("日期"));
+      clsbqy.setNumber(rs.getString("序号"));
+      clsbqy.setCompany(rs.getString("企业名称"));
+      clsbqy.setCaseId(rs.getString("流水号"));
+      clsbqy.setTagNumber(rs.getString("标记号"));
+      clsbqy.setIsPrint(rs.getString("是否打印"));
+      clsbqy.setFirstResult(rs.getString("初步筛选结果"));
+      clsbqy.setIsProblem(rs.getString("是否有问题"));
+      clsbqy.setReHandle(rs.getString("需重新处理"));
+
+    }
+
+    long end = System.currentTimeMillis();
+
+    ps.close();
+    conn.close();
+    logger.info("实例化耗时：" + (end - start) + "ms");
+  }
+
+  public void covertEntity(){
+    ClassPool pool = ClassPool.getDefault();
+    pool.appendSystemPath();
+  }
+}
