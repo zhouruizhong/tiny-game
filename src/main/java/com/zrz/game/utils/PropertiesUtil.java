@@ -114,17 +114,7 @@ public class PropertiesUtil {
         //PropertiesUtil p = new PropertiesUtil("config.properties");
         //System.out.println(p.getProperties().get("db.url"));
         //System.out.println(p.readProperty("db.url"));
-        //redisIp=39.96.68.251
-        //redisPort=6379
-        //redisPassword=
-        //maxTotal=2
-        //maxIdle=2
-        PropertiesUtil q = new PropertiesUtil("/config.properties");
-        q.writeProperty("redisIp", "39.96.68.251");
-        q.writeProperty("redisPort", "6379");
-        q.writeProperty("redisPassword", "123456");
-        q.writeProperty("maxTotal", "2");
-        q.writeProperty("maxIdle", "2");
+        PropertiesUtil q = new PropertiesUtil("config.properties");
         System.exit(0);
     }
 }
