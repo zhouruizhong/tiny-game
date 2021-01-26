@@ -81,7 +81,7 @@ message UserStopResult{
 //用户攻击
 message UserAttackCmd{
   //目标用户
-  uint32 userId = 1;
+  uint32 targetUserId = 1;
 }
 
 message UserAttackResult{

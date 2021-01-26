@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript">
+    const projectNoArray = ['310115-072-01',
+        '310115-072-02', '310115-072-03', '310115-072-04', '310115-072-05',
+        '310115-073-01', '310115-073-02', '310115-073-03', '310115-178-01',
+    ];
+    console.log(projectNoArray);
+    console.log(projectNoArray.indexOf('310115-072-01'))
+
+    class NormalReader{
+        constructor(txt) {
+            this.txt = txt;
+            this.buffer = this.txt.split(/[\r\n]/g);
+            this.index = 0;
+        }
+        readLine(){
+            if (this.index > this.buffer.length -1) {
+                return;
+            }
+            return this.buffer[this.index++];
+        }
+    }
+    class ColorReader extends NormalReader{
+
+    }
+
+    const btn = document.querySelector("button");
+    const result = document.querySelector(".result");
+    btn.addEventListener("click", ev => {
+        const txt = document.querySelector("textarea").value;
+        const reader = new NormalReader(txt);
+        let str;
+        while (str = reader.readLine()) {
+            const div = document.createElement("div");
+            div.innerHTML = str;
+
+        }
+    })
+
+</script>
+</body>
+</html>

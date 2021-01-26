@@ -27,7 +27,7 @@ public class GameDecoder extends ChannelInboundHandlerAdapter {
         // 读取消息的编号
         int msgCode = byteBuf.readShort();
 
-        Message.Builder msgBuilder = MessageRecognizer.getBuilderByMsgCode(msgCode);
+        Message.Builder msgBuilder = MessageRecognizer.genBuilderByMsgCode(msgCode);
 
         // 拿到真实的字节数组 并打印
         byte [] msgBody = new byte[byteBuf.readableBytes()];
