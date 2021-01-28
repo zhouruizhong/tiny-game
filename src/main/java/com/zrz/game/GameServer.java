@@ -2,6 +2,7 @@ package com.zrz.game;
 
 import com.zrz.game.encoder.GameEncoder;
 import com.zrz.game.factory.CmdHandlerFactory;
+import com.zrz.game.factory.MysqlSessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.zrz.game.decoder.GameDecoder;
@@ -30,8 +31,9 @@ public class GameServer {
 
   public static void main(String[] args) throws Exception {
     // 如果使用map存储处理器类，则需要初始化处理器map
-    CmdHandlerFactory.start();
+    CmdHandlerFactory.init();
     MessageRecognizer.start();
+    MysqlSessionFactory.init();
 
     EventLoopGroup bossGroup = new NioEventLoopGroup(1);
     EventLoopGroup workGroup = new NioEventLoopGroup();

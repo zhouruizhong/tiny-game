@@ -1,5 +1,6 @@
 package com.zrz.game.handler;
 
+import com.zrz.game.model.MoveState;
 import com.zrz.game.model.User;
 import com.zrz.game.model.UserManager;
 import com.zrz.game.protobuf.GameProtocol;
@@ -21,6 +22,16 @@ public class WhoElseIsHereCmdHandler implements ICmdHandler<GameProtocol.WhoElse
             GameProtocol.WhoElseIsHereResult.UserInfo.Builder userInfoBuilder = GameProtocol.WhoElseIsHereResult.UserInfo.newBuilder();
             userInfoBuilder.setUserId(currUser.getUserId());
             userInfoBuilder.setHeroAvatar(currUser.getHeroAvatar());
+
+            MoveState state = currUser.getMoveState();
+            GameProtocol.WhoElseIsHereResult.UserInfo.MoveState.Builder moveStateBuilder = GameProtocol.WhoElseIsHereResult.UserInfo.MoveState.newBuilder();
+            moveStateBuilder.setFromPosX(state.getFromPosX());
+            moveStateBuilder.setFromPosY(state.getFromPosY());
+            moveStateBuilder.setToPosX(state.getToPosX());
+            moveStateBuilder.setToPosY(state.getToPosY());
+            moveStateBuilder.setStartTime(state.getStartTime());
+            userInfoBuilder.setMoveState(moveStateBuilder);
+
             builder.addUserInfo(userInfoBuilder);
         }
         GameProtocol.WhoElseIsHereResult newResult = builder.build();

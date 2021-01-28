@@ -16,20 +16,16 @@ public class UserEntryCmdHandler implements ICmdHandler<GameProtocol.UserEntryCm
 
     @Override
     public void handler(ChannelHandlerContext ctx, GameProtocol.UserEntryCmd msg) {
-        int userId = msg.getUserId();
-        String heroAvatar = msg.getHeroAvatar();
+        Integer userId = (Integer) ctx.channel().attr(AttributeKey.valueOf("userId")).get();
+        if (null == userId) {
+            return;
+        }
+        User existUser = UserManager.getUserById(userId);
+        String heroAvatar = existUser.getHeroAvatar();
 
         GameProtocol.UserEntryResult.Builder builder = GameProtocol.UserEntryResult.newBuilder();
         builder.setUserId(userId);
         builder.setHeroAvatar(heroAvatar);
-
-        User newUser = new User();
-        newUser.setUserId(userId);
-        newUser.setHeroAvatar(heroAvatar);
-        UserManager.addUser(newUser);
-
-        // 将用户id附着到channel
-        ctx.channel().attr(AttributeKey.valueOf("userId")).set(userId);
 
         GameProtocol.UserEntryResult result = builder.build();
         Broadcaster.broadcast(result);

@@ -5,6 +5,7 @@ import com.zrz.game.Broadcaster;
 import com.zrz.game.factory.CmdHandlerFactory;
 import com.zrz.game.model.User;
 import com.zrz.game.model.UserManager;
+import com.zrz.game.processor.MainThreadProcessor;
 import com.zrz.game.protobuf.GameProtocol;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -45,20 +46,7 @@ public class GameServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         logger.info("收到客户端消息， msgClazz =" + msg.getClass().getName() + ", msg = " + msg);
-
-        ICmdHandler<? extends GeneratedMessageV3> cmdHandler = CmdHandlerFactory.create(msg.getClass());
-        if (null != cmdHandler) {
-            cmdHandler.handler(ctx, cast(msg));
-        }
+        MainThreadProcessor.getInstance().processor(ctx, (GeneratedMessageV3) msg);
     }
-
-    private static <TCmd extends GeneratedMessageV3> TCmd cast(Object msg){
-        if (null == msg) {
-            return null;
-        } else {
-            return (TCmd) msg;
-        }
-    }
-
 
 }

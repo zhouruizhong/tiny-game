@@ -67,7 +67,7 @@ public final class MessageRecognizer {
                 try{
                     Object obj = innerClazz.getDeclaredMethod("getDefaultInstance").invoke(innerClazz);
 
-                    //logger.info("{} <==> {}", innerClazz.getName(), msgCode.getNumber());
+                    logger.info("{} <==> {}", innerClazz.getName(), msgCode.getNumber());
 
                     MSG_CODE_AND_MSG_BODY_MAP.put(msgCode.getNumber(), (GeneratedMessageV3) obj);
                     MSG_CLAZZ_AND_MSG_CODE_MAP.put(innerClazz, msgCode.getNumber());

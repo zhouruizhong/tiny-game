@@ -57,24 +57,20 @@ public final class EntityHelperFactory {
             String last = field.getName().substring(1);
 
             String columnName = column.name();
-            if (field.getType() == Integer.class) {
+            if (field.getType().equals(Integer.class)) {
                 stringBuilder.append(clazzName.toLowerCase()).append(".");
-                stringBuilder.append("set");
-                stringBuilder.append(first.toUpperCase());
-                stringBuilder.append(last);
-                stringBuilder.append("(");
+                stringBuilder.append(field.getName());
+                stringBuilder.append(" = ");
                 stringBuilder.append("rs.getInt(\"");
                 stringBuilder.append(columnName);
-                stringBuilder.append("\")); \n");
+                stringBuilder.append("\"); \n");
             } else if (field.getType().equals(String.class)) {
                 stringBuilder.append(clazzName.toLowerCase()).append(".");
-                stringBuilder.append("set");
-                stringBuilder.append(first.toUpperCase());
-                stringBuilder.append(last);
-                stringBuilder.append("(");
+                stringBuilder.append(field.getName());
+                stringBuilder.append(" = ");
                 stringBuilder.append("rs.getString(\"");
                 stringBuilder.append(columnName);
-                stringBuilder.append("\")); \n");
+                stringBuilder.append("\"); \n");
             }
         }
 
@@ -84,7 +80,7 @@ public final class EntityHelperFactory {
         CtMethod ctMethod = CtMethod.make(stringBuilder.toString(), cc);
         cc.addMethod(ctMethod);
 
-        cc.writeFile("d://zrz");
+        //cc.writeFile("d://zrz");
         cc.defrost();
 
         Class<?> javaClazz = cc.toClass();

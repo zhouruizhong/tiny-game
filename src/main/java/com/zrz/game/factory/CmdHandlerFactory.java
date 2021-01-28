@@ -4,6 +4,9 @@ import com.google.protobuf.GeneratedMessageV3;
 import com.zrz.game.handler.*;
 import com.zrz.game.protobuf.GameProtocol;
 import org.reflections.Reflections;
+import org.reflections.scanners.FieldAnnotationsScanner;
+import org.reflections.scanners.MethodAnnotationsScanner;
+import org.reflections.scanners.SubTypesScanner;
 import org.reflections.util.ConfigurationBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,13 +35,19 @@ public final class CmdHandlerFactory {
         handlerMap.put(GameProtocol.UserEntryCmd.class, new UserEntryCmdHandler());
         handlerMap.put(GameProtocol.WhoElseIsHereCmd.class, new WhoElseIsHereCmdHandler());
         handlerMap.put(GameProtocol.UserMoveToCmd.class, new UserMoveToCmdHandler());
+        handlerMap.put(GameProtocol.UserAttackCmd.class, new UserAttackCmdHandler());
+        handlerMap.put(GameProtocol.UserLoginCmd.class, new UserLoginCmdHandler());
     }
 
     /**
      * 利用Reflections反射实现动态添加处理器类
      */
     public static void start(){
-        Reflections reflections = new Reflections(new ConfigurationBuilder().forPackages("com.zrz.game.handler"));
+        Reflections reflections = new Reflections(new ConfigurationBuilder()
+                .forPackages("com.zrz.game.handler")
+                .addScanners(new SubTypesScanner())
+                .addScanners(new MethodAnnotationsScanner()));
+
         Set<Class<? extends ICmdHandler>> classSet = reflections.getSubTypesOf(ICmdHandler.class);
         for (Class<?> clazz : classSet) {
             Method[] methods = clazz.getDeclaredMethods();

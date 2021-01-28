@@ -40,10 +40,18 @@ public final class UserManager {
 
     /**
      * 获取所有用户
-     * @return Collection
+     * @return Collection 用户列表
      */
     public static Collection<User> listUser(){
         return USER_MAP.values();
     }
 
+    /**
+     * 根据用户id获取用户
+     * @param userId 用户id
+     * @return 用户信息
+     */
+    public static User getUserById(Integer userId) {
+        return USER_MAP.get(userId);
+    }
 }

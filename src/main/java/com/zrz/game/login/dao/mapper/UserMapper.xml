@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zrz.game.dao.IUserDao">
+
+    <resultMap id="userModel" type="com.zrz.game.login.model.UserModel">
+        <id property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
+        <result property="password" column="password"/>
+        <result property="heroAvatar" column="hero_avatar"/>
+    </resultMap>
+
+    <select id="getUserByName" parameterType="string" resultMap="userModel" >
+        select * from t_user  where user_name = #{userName}
+    </select>
+
+    <insert id="insert" >
+        insert into t_user(user_name, password, hero_avatar) VALUE (#{userName}, #{password}, #{heroAvatar})
+    </insert>
+
+
+</mapper>
