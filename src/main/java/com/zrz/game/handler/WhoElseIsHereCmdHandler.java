@@ -5,6 +5,11 @@ import com.zrz.game.model.User;
 import com.zrz.game.model.UserManager;
 import com.zrz.game.protobuf.GameProtocol;
 import io.netty.channel.ChannelHandlerContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Collection;
+import java.util.List;
 
 /**
  *
@@ -12,8 +17,13 @@ import io.netty.channel.ChannelHandlerContext;
  */
 public class WhoElseIsHereCmdHandler implements ICmdHandler<GameProtocol.WhoElseIsHereCmd> {
 
+    private final static Logger logger = LoggerFactory.getLogger(WhoElseIsHereCmdHandler.class);
+
     @Override
     public void handler(ChannelHandlerContext ctx, GameProtocol.WhoElseIsHereCmd msg) {
+        Collection<User> list = UserManager.listUser();
+        logger.info("user list = {}", list);
+
         GameProtocol.WhoElseIsHereResult.Builder builder = GameProtocol.WhoElseIsHereResult.newBuilder();
         for (User currUser: UserManager.listUser()) {
             if (null == currUser) {

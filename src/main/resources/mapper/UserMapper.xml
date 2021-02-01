@@ -13,7 +13,7 @@
         select * from t_user  where user_name = #{userName}
     </select>
 
-    <insert id="insert" >
+    <insert id="insert" useGeneratedKeys="true" keyProperty="userId"  parameterType="com.zrz.game.login.model.UserModel">
         insert into t_user(user_name, password, hero_avatar) VALUE (#{userName}, #{password}, #{heroAvatar})
     </insert>
 

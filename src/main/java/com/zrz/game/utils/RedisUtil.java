@@ -45,7 +45,7 @@ public class RedisUtil {
 
 
     private static void initialPool() {
-        PropertiesUtil properties = new PropertiesUtil();
+        PropertiesUtil properties = new PropertiesUtil("config.properties");
         //Redis服务器IP
         String host = properties.readProperty("redisIp");
         //Redis的端口号
@@ -886,12 +886,13 @@ public class RedisUtil {
     }
 
     public static void main(String[] args) throws IOException {
-//        System.out.println(hset("map", "a","3"));
-//        System.out.println(hset("map", "b","3"));
-//        System.out.println(hset("map", "c","3"));
-        Set<String> set = keys("lock*");
+        //System.out.println(hset("map", "a","3"));
+        //System.out.println(hset("map", "b","3"));
+        //System.out.println(hset("map", "c","3"));
+        setnx("a", "a", 1);
+        /*Set<String> set = keys("lock*");
         for(String key : set){
             System.out.println(key);
-        }
+        }*/
     }
 }

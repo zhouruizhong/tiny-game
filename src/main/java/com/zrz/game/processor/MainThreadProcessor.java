@@ -22,7 +22,7 @@ public final class MainThreadProcessor {
 
     private static final MainThreadProcessor INSTANCE = new MainThreadProcessor();
 
-    ThreadFactory namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("game-pool-%d").build();
+    ThreadFactory namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("main-thread-pool-%d").build();
     ExecutorService singleThreadPool = new ThreadPoolExecutor(1, 1,0L, TimeUnit.MILLISECONDS,
             new LinkedBlockingQueue<Runnable>(1024), namedThreadFactory, new ThreadPoolExecutor.AbortPolicy());
 
@@ -56,6 +56,13 @@ public final class MainThreadProcessor {
                 }
             }
         );
+    }
+
+    public void processor(Runnable runnable){
+        if (null == runnable) {
+            return;
+        }
+        singleThreadPool.submit(runnable);
     }
 
     private static <TCmd extends GeneratedMessageV3> TCmd cast(Object msg){

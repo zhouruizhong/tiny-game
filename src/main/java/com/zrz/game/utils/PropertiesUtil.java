@@ -110,11 +110,12 @@ public class PropertiesUtil {
     }
 
     public static void main(String[] args) {
-        // sysConfig.properties(配置文件)
-        //PropertiesUtil p = new PropertiesUtil("config.properties");
-        //System.out.println(p.getProperties().get("db.url"));
-        //System.out.println(p.readProperty("db.url"));
-        PropertiesUtil q = new PropertiesUtil("config.properties");
+    // sysConfig.properties(配置文件)
+    // PropertiesUtil p = new PropertiesUtil("config.properties");
+    // System.out.println(p.getProperties().get("db.url"));
+    // System.out.println(p.readProperty("db.url"));
+
+    PropertiesUtil q = new PropertiesUtil("E:\\zrz\\tiny-game\\src\\main\\resources\\config.properties");
         System.exit(0);
     }
 }
