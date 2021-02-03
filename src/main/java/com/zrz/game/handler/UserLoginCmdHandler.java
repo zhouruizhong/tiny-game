@@ -39,6 +39,7 @@ public class UserLoginCmdHandler implements ICmdHandler<GameProtocol.UserLoginCm
                 // 新建用户
                 User user = new User();
                 user.setUserId(userModel.getUserId());
+                user.setUserName(userModel.getUserName());
                 user.setHeroAvatar(userModel.getHeroAvatar());
                 user.setCurrHp(100);
                 // 将用户加入管理器

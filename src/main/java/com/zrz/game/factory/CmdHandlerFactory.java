@@ -37,6 +37,7 @@ public final class CmdHandlerFactory {
         handlerMap.put(GameProtocol.UserMoveToCmd.class, new UserMoveToCmdHandler());
         handlerMap.put(GameProtocol.UserAttackCmd.class, new UserAttackCmdHandler());
         handlerMap.put(GameProtocol.UserLoginCmd.class, new UserLoginCmdHandler());
+        handlerMap.put(GameProtocol.GetRankCmd.class, new GetRankCmdHandler());
     }
 
     /**

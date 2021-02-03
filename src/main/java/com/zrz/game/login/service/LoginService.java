@@ -1,13 +1,17 @@
 package com.zrz.game.login.service;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.zrz.game.factory.MysqlSessionFactory;
 import com.zrz.game.login.model.UserModel;
 import com.zrz.game.processor.AsyncOperationProcessor;
 import com.zrz.game.processor.IAsyncOperation;
+import com.zrz.game.utils.RedisUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import redis.clients.jedis.Jedis;
 
 import java.util.List;
 import java.util.function.Function;
@@ -52,10 +56,23 @@ public class LoginService {
         AsyncOperationProcessor.getInstance().process(asyncOperation);
     }
 
+    private void updateUserBasicInfoInRedis(UserModel model){
+        if (null == model) {
+            return;
+        }
+
+        try (Jedis redis = RedisUtil.getJedis()) {
+            Object object = JSON.toJSON(model);
+            redis.hset("User_" + model.getUserId(), "BasicInfo", object.toString());
+        } catch (Exception e) {
+          logger.error(e.getMessage(), e);
+        }
+    }
+
     /**
      * 异步获取用户
      */
-    public class AsyncGetUserByName implements IAsyncOperation{
+    public static class AsyncGetUserByName implements IAsyncOperation{
         private final String username;
         private final String password;
         private UserModel userModel = null;
@@ -95,6 +112,8 @@ public class LoginService {
                     sqlSession.insert("insert", userModel);
                     //dao.insert(userModel);
                 }
+
+                LoginService.getInstance().updateUserBasicInfoInRedis(userModel);
             } catch (Exception e) {
                 logger.error(e.getMessage(), e);
             }

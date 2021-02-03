@@ -30,6 +30,7 @@ public class UserEntryCmdHandler implements ICmdHandler<GameProtocol.UserEntryCm
 
         GameProtocol.UserEntryResult.Builder builder = GameProtocol.UserEntryResult.newBuilder();
         builder.setUserId(userId);
+        builder.setUserName(existUser.getUserName());
         builder.setHeroAvatar(heroAvatar);
 
         GameProtocol.UserEntryResult result = builder.build();

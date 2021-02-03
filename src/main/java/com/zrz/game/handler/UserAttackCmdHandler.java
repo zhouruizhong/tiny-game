@@ -1,10 +1,13 @@
 package com.zrz.game.handler;
 
+import com.alibaba.fastjson.JSON;
 import com.zrz.game.Broadcaster;
 import com.zrz.game.GameServer;
 import com.zrz.game.model.User;
 import com.zrz.game.model.UserManager;
+import com.zrz.game.mq.VictorMsg;
 import com.zrz.game.protobuf.GameProtocol;
+import com.zrz.game.utils.RocketMqUtils;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
 import org.slf4j.Logger;
@@ -17,11 +20,11 @@ import org.slf4j.LoggerFactory;
  */
 public class UserAttackCmdHandler implements ICmdHandler<GameProtocol.UserAttackCmd> {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserAttackCmdHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserAttackCmdHandler.class);
 
     @Override
     public void handler(ChannelHandlerContext ctx, GameProtocol.UserAttackCmd userAttackCmd) {
-        logger.info("用户发起了攻击指令");
+        LOGGER.info("用户发起了攻击指令");
         if (null == ctx || null == userAttackCmd) {
             return;
         }
@@ -45,7 +48,7 @@ public class UserAttackCmdHandler implements ICmdHandler<GameProtocol.UserAttack
             return;
         }
 
-        logger.info("当前线程 = {}", Thread.currentThread().getName());
+        LOGGER.info("当前线程 = {}", Thread.currentThread().getName());
 
         int subtractHp = (int)(Math.random() * 10);
         targetUser.setCurrHp(targetUser.getCurrHp() - subtractHp);
@@ -54,6 +57,15 @@ public class UserAttackCmdHandler implements ICmdHandler<GameProtocol.UserAttack
         // 用户血量小于等于0时，用户死亡
         if (targetUser.getCurrHp() <= 0) {
             broadcastDie(targetUserId);
+            RocketMqUtils mqUtils = new RocketMqUtils("192.168.1.52:9876", "test", "die", 1000);
+            try{
+                VictorMsg victorMsg = new VictorMsg();
+                victorMsg.setLoseId(targetUserId);
+                victorMsg.setWinnerId(attackUserId);
+                mqUtils.sendMq("victor", JSON.toJSON(victorMsg).toString());
+            } catch (Exception e) {
+                LOGGER.error(e.getMessage(), e);
+            }
         }
     }
 

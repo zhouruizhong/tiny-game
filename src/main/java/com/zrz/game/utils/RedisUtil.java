@@ -18,15 +18,16 @@ import java.util.*;
  * @author zrz
  * @date 2021/1/25 14:47
  */
-public class RedisUtil {
+public final class RedisUtil {
 
     private static final Logger log = Logger.getLogger(RedisUtil.class);
-    //等待可用连接的最大时间，单位毫秒，默认值为-1，表示永不超时。如果超过等待时间，则直接抛出JedisConnectionException；
-    private static int MAX_WAIT = 15 * 1000;
-    //超时时间
-    private static int TIMEOUT = 10 * 1000;
 
     private static JedisPool jedisPool = null;
+
+    /**
+     * 私有化构造器
+     */
+    private RedisUtil(){}
 
     /**
      * Jedis实例获取返回码
@@ -75,12 +76,15 @@ public class RedisUtil {
             //表示idle object evitor每次扫描的最多的对象数
             config.setNumTestsPerEvictionRun(1000);
             //等待可用连接的最大时间，单位毫秒，默认值为-1，表示永不超时。如果超过等待时间，则直接抛出JedisConnectionException；
-            config.setMaxWaitMillis(MAX_WAIT);
+            int maxWait = 15 * 1000;
+            config.setMaxWaitMillis(maxWait);
 
+            //超时时间
+            int timeout = 10 * 1000;
             if (StringUtils.isNotBlank(password)) {
-                jedisPool = new JedisPool(config, host, port, TIMEOUT, password);
+                jedisPool = new JedisPool(config, host, port, timeout, password);
             } else {
-                jedisPool = new JedisPool(config, host, port, TIMEOUT);
+                jedisPool = new JedisPool(config, host, port, timeout);
             }
         } catch (Exception e) {
             if(jedisPool != null){

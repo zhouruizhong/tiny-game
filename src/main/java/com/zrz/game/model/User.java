@@ -10,6 +10,8 @@ import lombok.Data;
 public class User {
     /**用户id**/
     private int userId;
+    /**用户名*/
+    private String userName;
     /**英雄头像**/
     private String heroAvatar;
     /**用户血量*/

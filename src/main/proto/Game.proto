@@ -6,7 +6,7 @@ option java_package = "com.zrz.game.protobuf";
 option java_outer_classname = "GameProtocol";
 
 // 消息代号
-enum MsgCode{
+enum MsgCode {
   USER_ENTRY_CMD = 0;
   USER_ENTRY_RESULT = 1;
   WHO_ELSE_IS_HERE_CMD = 2;
@@ -24,137 +24,222 @@ enum MsgCode{
   USER_LOGIN_RESULT = 14;
   SELECT_HERO_CMD = 15;
   SELECT_HERO_RESULT = 16;
+  GET_RANK_CMD = 17;
+  GET_RANK_RESULT = 18;
+};
+
+//
+// 用户入场
+///////////////////////////////////////////////////////////////////////
+// 指令
+message UserEntryCmd {
 }
 
-/**
- * 用户入场
- * 指令
- */
-message UserEntryCmd{
+// 结果
+message UserEntryResult {
+  // 用户 Id
   uint32 userId = 1;
-  string heroAvatar = 2;
+  // 用户名称
+  string userName = 2;
+  // 英雄形象
+  string heroAvatar = 3;
 }
 
-/**
- * 用户入场
- * 结果
- */
-message UserEntryResult{
-  uint32 userId = 1;
-  string heroAvatar = 2;
-}
-
+//
+// 还有谁在场
+///////////////////////////////////////////////////////////////////////
+// 指令
 message WhoElseIsHereCmd {
-
 }
 
-message WhoElseIsHereResult{
-
+// 结果
+message WhoElseIsHereResult {
+  // 用户信息数组
   repeated UserInfo userInfo = 1;
 
+  // 用户信息
   message UserInfo {
-    // 用户id
+    // 用户 Id
     uint32 userId = 1;
-    // 英雄
-    string heroAvatar = 2;
+    // 用户名称
+    string userName = 2;
+    // 英雄形象
+    string heroAvatar = 3;
     // 移动状态
-    MoveState moveState = 3;
+    MoveState moveState = 4;
 
     // 移动状态
-    message MoveState{
-      // 起始位置
+    message MoveState {
+      // 起始位置 X
       float fromPosX = 1;
-      // 起始位置
+      // 起始位置 Y
       float fromPosY = 2;
-      // 目标位置
+      // 移动到位置 X
       float toPosX = 3;
-      // 目标位置
+      // 移动到位置 Y
       float toPosY = 4;
       // 启程时间戳
       uint64 startTime = 5;
     }
   }
 }
-// 用户移动指令
+
+//
+// 用户移动
+///////////////////////////////////////////////////////////////////////
+// 指令
 message UserMoveToCmd {
-  // 用户移动指令无需用户id
-
-  // 起始位置X
+  //
+  // XXX 注意: 用户移动指令中没有用户 Id,
+  // 这是为什么?
+  //
+  // 起始位置 X
   float moveFromPosX = 1;
-  // 起始位置Y
+  // 起始位置 Y
   float moveFromPosY = 2;
-  // 移动位置X
+  // 移动到位置 X
   float moveToPosX = 3;
-  // 移动位置Y
+  // 移动到位置 Y
   float moveToPosY = 4;
-
 }
 
-// 用户移动结果
+// 结果
 message UserMoveToResult {
-  // 移动的用户id
+  // 移动用户 Id
   uint32 moveUserId = 1;
-  // 起始位置X
+  // 起始位置 X
   float moveFromPosX = 2;
-  // 起始位置Y
+  // 起始位置 Y
   float moveFromPosY = 3;
-  // 目标位置X
+  // 移动到位置 X
   float moveToPosX = 4;
-  // 目标位置Y
+  // 移动到位置 Y
   float moveToPosY = 5;
   // 启程时间戳
   uint64 moveStartTime = 6;
 }
 
-message UserStopCmd{
-
-}
-
-message UserStopResult{
-
-}
-
-//用户攻击
-message UserAttackCmd{
-  //目标用户
-  uint32 targetUserId = 1;
-}
-
-message UserAttackResult{
-  // 发动攻击的用户id
-  uint32 attackUserId = 1;
-  // 目标用户
-  uint32 targetUserId = 2;
-}
-
-message UserDieResult{
-  uint32 targetUserId = 1;
-}
-
-message UserQuitResult{
+//
+// 用户退场
+///////////////////////////////////////////////////////////////////////
+//
+// XXX 注意: 用户退场不需要指令, 因为是在断开服务器的时候执行
+//
+// 结果
+message UserQuitResult {
+  // 退出用户 Id
   uint32 quitUserId = 1;
 }
 
-// 用户掉血结果
-message UserSubtractHpResult{
-  // 目标用户
+//
+// 用户停驻
+///////////////////////////////////////////////////////////////////////
+// 指令
+message UserStopCmd {
+}
+
+// 结果
+message UserStopResult {
+  // 停驻用户 Id
+  uint32 stopUserId = 1;
+  // 停驻在位置 X
+  float stopAtPosX = 2;
+  // 停驻在位置 Y
+  float stopAtPosY = 3;
+}
+
+//
+// 用户攻击
+///////////////////////////////////////////////////////////////////////
+// 指令
+message UserAttackCmd {
+  // 目标用户 Id
   uint32 targetUserId = 1;
-  // 掉血量
+}
+
+// 结果
+message UserAttackResult {
+  // 发动攻击的用户 Id
+  uint32 attackUserId = 1;
+  // 目标用户 Id
+  uint32 targetUserId = 2;
+}
+
+// 用户减血结果
+message UserSubtractHpResult {
+  // 目标用户 Id
+  uint32 targetUserId = 1;
+  // 减血量
   uint32 subtractHp = 2;
 }
 
-message UserLoginCmd{
-  // 登录名
+// 死亡结果
+message UserDieResult {
+  // 目标用户 Id
+  uint32 targetUserId = 1;
+}
+
+//
+// 用户登录
+///////////////////////////////////////////////////////////////////////
+// 指令
+message UserLoginCmd {
+  // 用户名称
   string userName = 1;
-  // 密码
+  // 用户密码
   string password = 2;
 }
 
-message UserLoginResult{
-  // 用户id 如果时-1 则说明登录失败
+// 结果
+message UserLoginResult {
+  // 用户 Id,
+  // 如果是 -1 则说明登录失败
   uint32 userId = 1;
-  // 登录名
+  // 用户名称
   string userName = 2;
   // 英雄形象
   string heroAvatar = 3;
+}
+
+//
+// 选择英雄
+///////////////////////////////////////////////////////////////////////
+// 指令
+message SelectHeroCmd {
+  // 英雄形象
+  string heroAvatar = 1;
+}
+
+// 结果
+message SelectHeroResult {
+  // 英雄形象,
+  // 如果是空字符串则说明失败
+  string heroAvatar = 1;
+}
+
+//
+// 获取排行榜
+///////////////////////////////////////////////////////////////////////
+// 指令
+message GetRankCmd {
+}
+
+// 结果
+message GetRankResult {
+  // 排名条目
+  repeated RankItem rankItem = 1;
+
+  // 用户信息
+  message RankItem {
+    // 排名 Id
+    uint32 rankId = 1;
+    // 用户 Id
+    uint32 userId = 2;
+    // 用户名称
+    string userName = 3;
+    // 英雄形象
+    string heroAvatar = 4;
+    // 胜利次数
+    uint32 win = 5;
+  }
 }
