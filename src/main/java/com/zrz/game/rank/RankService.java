@@ -52,6 +52,23 @@ public final class RankService {
     }
 
     /**
+     * 刷新排行榜
+     * @param loseId 输家id
+     * @param winnerId 赢家id
+     */
+    public void refreshRank(int loseId, int winnerId){
+        try (Jedis redis = RedisUtil.getJedis()) {
+            redis.hincrBy("User_" + winnerId, "Win", 1);
+            redis.hincrBy("User_" + loseId, "Lose", 1);
+
+            String win = redis.hget("User_" + winnerId, "Win");
+            redis.zadd("Rank", Double.parseDouble(win), String.valueOf(winnerId));
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage(), e);
+        }
+    }
+
+    /**
      * 异步方式获取排名
      */
     public static class AsyncGetRank implements IAsyncOperation {

@@ -57,14 +57,21 @@ public class UserAttackCmdHandler implements ICmdHandler<GameProtocol.UserAttack
         // 用户血量小于等于0时，用户死亡
         if (targetUser.getCurrHp() <= 0) {
             broadcastDie(targetUserId);
-            RocketMqUtils mqUtils = new RocketMqUtils("192.168.1.52:9876", "test", "die", 1000);
-            try{
-                VictorMsg victorMsg = new VictorMsg();
-                victorMsg.setLoseId(targetUserId);
-                victorMsg.setWinnerId(attackUserId);
-                mqUtils.sendMq("victor", JSON.toJSON(victorMsg).toString());
-            } catch (Exception e) {
-                LOGGER.error(e.getMessage(), e);
+
+            // 判断英雄是否死亡
+            if (!targetUser.isDied()) {
+                targetUser.setDied(true);
+
+                // 发送战斗结果到排行榜
+                RocketMqUtils mqUtils = new RocketMqUtils("192.168.1.37:9876", "test", "die", 1000);
+                try{
+                    VictorMsg victorMsg = new VictorMsg();
+                    victorMsg.setLoseId(targetUserId);
+                    victorMsg.setWinnerId(attackUserId);
+                    mqUtils.sendMq("produceGroup", JSON.toJSON(victorMsg).toString());
+                } catch (Exception e) {
+                    LOGGER.error(e.getMessage(), e);
+                }
             }
         }
     }

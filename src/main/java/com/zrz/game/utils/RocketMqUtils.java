@@ -254,8 +254,8 @@ public class RocketMqUtils {
 
     /**
      * 消费端默认消息
-     * @param headerInterface
-     * @return
+     * @param headerInterface 回调方法
+     * @return MessageListenerConcurrently
      */
     private MessageListenerConcurrently setConcurrentlyConsumeMessage(HeaderInterface headerInterface){
         return (List<MessageExt> list, ConsumeConcurrentlyContext context) -> {
@@ -298,7 +298,12 @@ public class RocketMqUtils {
      * 函数式回调接口
      */
     @FunctionalInterface
-    interface HeaderInterface{
+    public interface HeaderInterface{
+        /**
+         *
+         * @param message 消息
+         * @throws IOException 异常
+         */
         void execute(MessageExt message) throws IOException;
     }
 
@@ -315,7 +320,7 @@ public class RocketMqUtils {
 
     public static void main(String[] args) throws Exception {
         // tag="pushA || pushB || pushC" 用||隔开表示多个tag消息都可以接收,null或*表示主题所有队列，但是发送MQ一条消息只能有一个tag标签
-        RocketMqUtils rocketMqUtils = new RocketMqUtils("192.168.1.52:9876", "test-topic-04", "pushA",3000);
+        RocketMqUtils rocketMqUtils = new RocketMqUtils("192.168.1.37:9876", "test-topic-04", "pushA",3000);
         //生产消息
         List<String> msgList = new ArrayList<>();
         for (int i = 0; i<10; i++){
@@ -328,9 +333,9 @@ public class RocketMqUtils {
         rocketMqUtils.sendMq("cluster-test-group", msgList, false, true, 3);
 
         //消费消息,如果多个消费者线程（应用）consumerGroup相同，则天然具备了负载均衡消费topic消息能力
-//        rocketMqUtils.pullMq("test-consumer-group", (message)->{
-//            String messageBody = new String(message.getBody(), RemotingHelper.DEFAULT_CHARSET);
-//            System.out.println("消费响应：tag : " + message.getTags() + ",  msgBody : " + messageBody);//输出消息内容
-//        }, true);
+        rocketMqUtils.pullMq("test-consumer-group", (message)->{
+            String messageBody = new String(message.getBody(), RemotingHelper.DEFAULT_CHARSET);
+            System.out.println("消费响应：tag : " + message.getTags() + ",  msgBody : " + messageBody);//输出消息内容
+        }, true, false);
     }
 }
